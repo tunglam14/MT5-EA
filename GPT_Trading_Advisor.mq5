@@ -408,7 +408,7 @@ void CreateInfoPanel()
    ObjectSetInteger(0, g_panel_name + "_TP", OBJPROP_FONTSIZE, 9);
    
    //--- Create multi-line reason labels (up to 3 lines)
-   for(int i = 1; i <= 3; i++)
+   for(int i = 1; i <= 5; i++)
    {
       string reason_name = g_panel_name + "_Reason" + IntegerToString(i);
       ObjectCreate(0, reason_name, OBJ_LABEL, 0, 0, 0);
@@ -424,7 +424,7 @@ void CreateInfoPanel()
    //--- Create last update label (moved further down)
    ObjectCreate(0, g_panel_name + "_LastUpdate", OBJ_LABEL, 0, 0, 0);
    ObjectSetInteger(0, g_panel_name + "_LastUpdate", OBJPROP_XDISTANCE, 30);
-   ObjectSetInteger(0, g_panel_name + "_LastUpdate", OBJPROP_YDISTANCE, 270);
+   ObjectSetInteger(0, g_panel_name + "_LastUpdate", OBJPROP_YDISTANCE, 330);
    ObjectSetInteger(0, g_panel_name + "_LastUpdate", OBJPROP_CORNER, CORNER_LEFT_UPPER);
    ObjectSetString(0, g_panel_name + "_LastUpdate", OBJPROP_TEXT, "Last Update: Never");
    ObjectSetInteger(0, g_panel_name + "_LastUpdate", OBJPROP_COLOR, clrGray);
@@ -467,7 +467,7 @@ void UpdateInfoPanel()
       string reason_lines[];
       WrapText(g_analysis_reason, 45, reason_lines); // 45 chars per line for panel width
       
-      for(int i = 1; i <= 3; i++)
+      for(int i = 1; i <= 5; i++)
       {
          string reason_name = g_panel_name + "_Reason" + IntegerToString(i);
          string line_text = "";
@@ -592,7 +592,7 @@ string PrepareKlineData(const MqlRates &rates_m5[], const MqlRates &rates_m15[],
    data += "Recent Klines (Last " + IntegerToString(Klines_Count) + " bars):\n";
    data += "Time,Open,High,Low,Close,Volume\n";
    
-   for(int i = Klines_Count - 1; i >= 0; i--)
+   for(int i = 50 - 1; i >= 0; i--)
    {
       data += TimeToString(rates_h1[i].time) + ",";
       data += DoubleToString(rates_h1[i].open, _Digits) + ",";
@@ -608,7 +608,7 @@ string PrepareKlineData(const MqlRates &rates_m5[], const MqlRates &rates_m15[],
    data += "Recent Klines (Last " + IntegerToString(Klines_Count) + " bars):\n";
    data += "Time,Open,High,Low,Close,Volume\n";
    
-   for(int i = Klines_Count - 1; i >= 0; i--)
+   for(int i = 50 - 1; i >= 0; i--)
    {
       data += TimeToString(rates_h4[i].time) + ",";
       data += DoubleToString(rates_h4[i].open, _Digits) + ",";
@@ -890,7 +890,7 @@ string CreateAnthropicJSONRequest(const string prompt)
    //--- Build JSON request for Anthropic format (using latest Claude Sonnet 4)
    string json = "{";
    json += "\"model\":\"claude-sonnet-4-20250514\",";  // Latest Claude Sonnet 4 model
-   json += "\"max_tokens\":500,";  // Claude Sonnet 4 supports up to 64k tokens
+   json += "\"max_tokens\":1000,";  // Claude Sonnet 4 supports up to 64k tokens
    json += "\"temperature\":0.3,";
    json += "\"system\":\"" + escaped_system + "\",";
    json += "\"messages\":[";
